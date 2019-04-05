@@ -25,7 +25,7 @@
                         
                         <button type="button" class="btn btn-primary" onclick="showMap()" id="showMapB">Покажите</button>
                       </form>
-            <div style="width: 640px; height: 480px;display: none" id="mapContainer"></div>
+            <div style="width: 640px; height: 480px" id="mapContainer"></div>
         </div> 
         <div class="col-md-4"></div>
     </div>
@@ -42,8 +42,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script>
-    function showMap(){
-        // Initialize the platform object:
+      // Initialize the platform object:
     var platform = new H.service.Platform({
     'app_id': 'xqJ4WB5VxflEXQ0dZUvv',
     'app_code': 'ZEvYat0FFrSftO2vRmNB5A'
@@ -56,17 +55,17 @@
 
 
 
-    document.getElementById('mapContainer').style.display = 'block';
     var map = new H.Map(
     document.getElementById('mapContainer'),
+
     maptypes.normal.map,
     {
       zoom: 4,
       center: { lng: 37.620393, lat: 55.753960 }
     });
 
-
-
+    function showMap(){
+        document.getElementById('mapContainer').style.display = 'block';
     // Create the parameters for the geocoding request:
     var searchTextF = document.getElementById('address').value;
     var geocodingParams = {
