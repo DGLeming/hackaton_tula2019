@@ -42,6 +42,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script>
+
       // Initialize the platform object:
     var platform = new H.service.Platform({
     'app_id': 'xqJ4WB5VxflEXQ0dZUvv',
@@ -49,7 +50,11 @@
     });
 
     // Obtain the default map types from the platform object
-    var maptypes = platform.createDefaultLayers();
+    var pixelRatio = window.devicePixelRatio || 1;
+    var maptypes = platform.createDefaultLayers({
+        tileSize: pixelRatio === 1 ? 256 : 512,
+        ppi: pixelRatio === 1 ? undefined : 320
+    });
     // Retrieve the target element for the map:
     var targetElement = document.getElementById('mapContainer');
 
@@ -61,8 +66,13 @@
     maptypes.normal.map,
     {
       zoom: 4,
-      center: { lng: 37.620393, lat: 55.753960 }
+      center: { lng: 37.620393, lat: 55.753960 },
+      pixelRatio: pixelRatio
     });
+
+    var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+
+    var ui = H.ui.UI.createDefault(map, maptypes);
 
     function showMap(){
         document.getElementById('mapContainer').style.display = 'block';
@@ -85,6 +95,7 @@
         lng: locations[i].Location.DisplayPosition.Longitude
     };
     marker = new H.map.Marker(position);
+    console.log(position);
     map.addObject(marker);
     }
     };
