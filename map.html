@@ -2,7 +2,7 @@
   <head>
     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    
+    <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1549984893" />
     <title>Лол</title>
     <style>
     #showMapB {
@@ -31,10 +31,13 @@
     </div>
 
 
-  <script src="http://js.api.here.com/v3/3.0/mapsjs-core.js"
-    type="text/javascript" charset="utf-8"></script>
-    <script src="http://js.api.here.com/v3/3.0/mapsjs-service.js"
-    type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
+
+
+    
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -48,13 +51,53 @@
 
     // Obtain the default map types from the platform object
     var maptypes = platform.createDefaultLayers();
+    // Retrieve the target element for the map:
+    var targetElement = document.getElementById('mapContainer');
+
+
+
     document.getElementById('mapContainer').style.display = 'block';
     var map = new H.Map(
     document.getElementById('mapContainer'),
     maptypes.normal.map,
     {
-      zoom: 10,
-      center: { lng: 13.4, lat: 52.51 }
+      zoom: 4,
+      center: { lng: 37.620393, lat: 55.753960 }
+    });
+
+
+
+    // Create the parameters for the geocoding request:
+    var searchTextF = document.getElementById('address').value;
+    var geocodingParams = {
+        searchText: searchTextF
+    };
+
+
+    // Define a callback function to process the geocoding response:
+    var onResult = function(result) {
+    var locations = result.Response.View[0].Result,
+        position,
+        marker;
+    // Add a marker for each location found
+    for (i = 0;  i < locations.length; i++) {
+    position = {
+        lat: locations[i].Location.DisplayPosition.Latitude,
+        lng: locations[i].Location.DisplayPosition.Longitude
+    };
+    marker = new H.map.Marker(position);
+    map.addObject(marker);
+    }
+    };
+
+    // Get an instance of the geocoding service:
+    var geocoder = platform.getGeocodingService();
+
+    // Call the geocode method with the geocoding parameters,
+    // the callback and an error callback function (called if a
+    // communication error occurs):
+    geocoder.geocode(geocodingParams, onResult, function(e) {
+    alert(e);
     });
     }
 
