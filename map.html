@@ -25,7 +25,7 @@
                         
                         <button type="button" class="btn btn-primary" onclick="showMap()" id="showMapB">Покажите</button>
                       </form>
-            <div style="width: 640px; height: 480px" id="mapContainer"></div>
+            <div style="width: 700px; height: 600px" id="mapContainer"></div>
         </div> 
         <div class="col-md-4"></div>
     </div>
@@ -147,9 +147,6 @@
     });
     }
 
-    function lol(){
-
-    }
 
 //////////////////////////////////////////////////////////
   function addMarkerToGroup(group, coordinate, html) {
@@ -212,6 +209,7 @@ function addInfoBubble(map) {
     if (target instanceof mapsjs.map.Marker) {
       behavior.enable();
     }
+    addClickEventListenerToMap(map);    /////// узнается ближайшая точка
   }, false);
 
   // Listen to the drag event and move the position of the marker
@@ -326,6 +324,49 @@ var a;
       }
   });
 
+
+
+
+
+
+
+  
+
+function addClickEventListenerToMap(map) {
+  // add 'tap' listener
+    var coords =  {lat: markerlist[0].Ua[0], lng: markerlist[0].Ua[1]};
+    console.log(coords);
+    findNearestMarker(coords);
+  
+}
+
+function findNearestMarker(coords) {
+  var minDist = 1000,
+    nearest_text = '*None*',
+    markerDist,
+    // get all objects added to the map
+    objects = intrPlaces,
+    len = intrPlaces.length,
+    i;
+    function getDis(coord){
+
+    }
+  // iterate over objects and calculate distance between them
+  for (i = 0; i < len; i += 1) {
+    console.log(coords,objects[i]['P']['position'],objects[i].getPosition());
+
+    markerDist = objects[i].getPosition().distance(coords)/100000;
+    //console.log(markerDist);
+    if (markerDist < minDist) {
+      minDist = markerDist;
+      //console.log(objects[i]);
+      nearest_text = objects[i]['P']['title'];
+      console.log(objects[i].getPosition().distance(coords)+objects[i]['P']['title']);
+    }
+  }
+
+  alert('The nearest marker is: ' + nearest_text);
+}
   
   
 
