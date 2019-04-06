@@ -50,6 +50,18 @@ if($_GET['task'] <= $this_quest_total_parts){
 if($this_quest_total_parts >= $user_task){
 	include 'markup/play_quest_task.php';
 } else {
+	$ended = json_decode($quest['ended']);
+	$found = false;
+	for($i = 0; $i < count($ended); $i++){
+		if($ended[$i] == $user[0]['id']){
+			$found = true;
+		}
+	}
+	if(!$found){
+		array_push($ended,$user[0]['id']);
+		$statement = $pdo->prepare("UPDATE quests SET finished = ?, ended = ? WHERE id = ?");
+		$statement->execute(array($quest['finished']+1, json_encode($ended), $quest['id']));
+	}
 	include 'markup/play_quest_ending.php';
 }
 ?>

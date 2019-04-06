@@ -1,12 +1,19 @@
 <p id="success_p">Поздравляем, вы прошли квест "<?=$quest['name']?>"! Вот немного информации о нем:</p>
 <div class="quest_item_copy">
-	<img src="img/fun.jpg" class="quest_img">
-	<p class="quest_name">Название квеста1</p>
-	<p class="quest_description">Описание квеста может быть довольно обширным, так что надо написать длинный текст для проверки того, как будет вести себя верстка</p>
-	<p class="quest_author">Автор: DGLeming</p>
+	<?php
+	if($quest['img'] != ''){
+		$img_link = $quest['img'];
+	} else {
+		$img_link = 'img/fun.jpg';
+	}
+	?>
+	<img src="<?=$img_link?>" class="quest_img">
+	<p class="quest_name"><?=$quest['name']?></p>
+	<p class="quest_description"><?=$quest['description']?></p>
+	<p class="quest_author">Автор: <?=$quest['creator']?></p>
 	<div class="quest_rating">
 		<p>Рейтинг:</p>
-		<p>10 баллов</p>
+		<p><?=$quest['rating']?> баллов</p>
 	</div>
 </div>
 <div id="quest_ending">
