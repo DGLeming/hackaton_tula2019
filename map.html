@@ -116,7 +116,7 @@
     if(isFirstLoc) {  ///эта хрень зумит только для самой близкой точки
     firstPos = position;
     map.setCenter(position);
-    map.setZoom(12);
+    map.setZoom(16);
     
     }
     console.log(position);
@@ -226,15 +226,12 @@ function addInfoBubble(map) {
 
 var a;
   function placesSearch(platform) {
-    for (var k=0;k<0.02;k=k+0.002){
-      for (var t=0;t<0.02;t=t+0.002){
-        
-      }
-    }
     var placesService= platform.getPlacesService(),
       parameters = {
         at: firstPos['lat']+','+firstPos['lng'],
-        cat: 'restaurant'};
+        cat: 'restaurant',
+        size: '100'};
+
 
         for (var i=intrPlaces.length-1;i>=0;i--){
             console.log(i);
@@ -263,6 +260,39 @@ var a;
         alert(error);
       });
   }
+
+  let hoveredObject;
+  let infoBubble = new H.ui.InfoBubble({lat: 0, lng: 0}, {});
+  infoBubble.addClass('info-bubble');
+  infoBubble.close();
+  ui.addBubble(infoBubble);
+  map.addEventListener('pointermove', (e) => {
+    if (hoveredObject && hoveredObject !== e.target) {
+        infoBubble.close();
+    }
+
+    hoveredObject = e.target;
+    if (hoveredObject.icon) {
+        let row = hoveredObject.getData();
+        if (row) {
+            let name = row.attributes['NAME'];
+            let address = row.attributes['LOCATION_LABEL'];
+            let volume = row.attributes['VOLUME'];
+
+            let pos = map.screenToGeo(
+                e.currentPointer.viewportX,
+                e.currentPointer.viewportY);
+            infoBubble.setPosition(pos);
+            infoBubble.setContent(`
+                <div class="info-bubble-title">lol</div>
+                <div class="info-bubble-label">
+                    ghbdtn <br />
+                    Volume: gf kg
+                </div>`);
+            infoBubble.open();
+        }
+    }
+});
 
 
     // Instantiate (and display) a map object:
