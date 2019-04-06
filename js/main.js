@@ -9,25 +9,25 @@ function send_ansver(task_id,task_num){
 	$('#success_p')[0].innerHTML = '';
 	$('#error_p')[0].innerHTML = '';
 	$.post( "scripts/task_check.php", { 'task_id': task_id, 'ansver': ansver})
-  .done(function( data ) {
-  	console.log(data);    
-    if(data == 'right'){
-    	setTimeout(function(){
-    		$('#success_p')[0].innerHTML = 'Поздравляем, ваш ответ принят, через 3 секунды вы будете перенаправлены к следующему заданию!';	
-    	}, 1000);
-    	setTimeout(function(){
-    		window.location.href = "/quest_"+quest_id+"_"+(task_num+1);
-    	}, 4000);
+        .done(function( data ) {
+        	console.log(data);    
+        if(data == 'right'){
+        	setTimeout(function(){
+        		$('#success_p')[0].innerHTML = 'Поздравляем, ваш ответ принят, через 3 секунды вы будете перенаправлены к следующему заданию!';	
+        	}, 1000);
+        	setTimeout(function(){
+        		window.location.href = "/quest_"+quest_id+"_"+(task_num+1);
+        	}, 4000);
 
-    	
-    }
-    if(data == 'wrong'){
-    	setTimeout(function(){
-    		$('#error_p')[0].innerHTML = 'К сожалению - ответ не верный, попробуйте снова';
-    	}, 1000);
-    	
-    }
-  });
+        	
+        }
+        if(data == 'wrong'){
+        	setTimeout(function(){
+        		$('#error_p')[0].innerHTML = 'К сожалению - ответ не верный, попробуйте снова';
+        	}, 1000);
+        	
+        }
+    });
 }
 
 function quests_sort (type) {
@@ -53,3 +53,26 @@ $('.quest_item').click(function(){
 $('#logo').click(function(){
     window.location.href = '/';
 })
+
+function quest_rating(quest_id, liked){
+    $.post( "scripts/rate_quest.php", { 'quest_id': quest_id, 'liked': liked})
+        .done(function( data ) {
+        console.log(data);    
+        if(data == 'right'){
+            setTimeout(function(){
+                $('#success_p')[0].innerHTML = 'Поздравляем, ваш ответ принят, через 3 секунды вы будете перенаправлены к следующему заданию!'; 
+            }, 1000);
+            setTimeout(function(){
+                window.location.href = "/quest_"+quest_id+"_"+(task_num+1);
+            }, 4000);
+
+            
+        }
+        if(data == 'wrong'){
+            setTimeout(function(){
+                $('#error_p')[0].innerHTML = 'К сожалению - ответ не верный, попробуйте снова';
+            }, 1000);
+            
+        }
+    });
+}

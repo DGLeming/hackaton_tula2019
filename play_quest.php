@@ -8,6 +8,7 @@ if($_SESSION['user'] == '' || !$_SESSION['user']){
 }
 $stmt = $pdo->query('SELECT * FROM quests WHERE id = '.$_GET['id']);
 $quest = $stmt->fetch();
+$this_quest_total_parts = count(json_decode($quest['tasks']));
 
 $stmt_user = $pdo->query('SELECT * FROM users WHERE login = "'.$_SESSION['user'].'"');
 $user = $stmt_user->fetchAll();
@@ -25,13 +26,14 @@ if($user_task == 0){
 	$statement = $pdo->prepare("UPDATE users SET quests_done = ? WHERE login = ?");
 	$statement->execute(array($user_quests_encoded, $_SESSION['user']));
 	$user_task = 1;
-	var_dump($quest);
 	$statement = $pdo->prepare("UPDATE quests SET started = ? WHERE id = ?");
 	$statement->execute(array($quest['started']+1, $quest['id']));
 }
 if($user_task != $_GET['task']){
 	header('Location: /quest_'.$_GET['id'].'_'.$user_task);
 }
+
+
 
 include 'markup/header.php';
 ?>
@@ -41,25 +43,16 @@ $stmt = $pdo->query('SELECT * FROM quests WHERE id = '.$_GET['id']);
 $quest = $stmt->fetch();
 $task_id = json_decode($quest['tasks']);
 $task_id = $task_id[$_GET['task']-1];
-$stmt_task = $pdo->query('SELECT * FROM tasks WHERE id = '.$task_id);
-$task = $stmt_task->fetch();
-echo $task['question'];
-echo '<br>Otvet:'.$task['ansver'];
-echo '<br>Подсказка'.$task['help'];
-
-
-
-
-
-
+if($_GET['task'] <= $this_quest_total_parts){
+	$stmt_task = $pdo->query('SELECT * FROM tasks WHERE id = '.$task_id);
+	$task = $stmt_task->fetch();
+}
+if($this_quest_total_parts >= $user_task){
+	include 'markup/play_quest_task.php';
+} else {
+	include 'markup/play_quest_ending.php';
+}
 ?>
-<p class="quest_play_name"><?=$quest['name']?></p>
-<p class="quest_play_question"><?=$task['question']?></p>
-<input type="text" name="ansver" placeholder="Ваш ответ" id="ansver">
-<button onclick="send_ansver(<?=$task_id;?>,<?=$_GET['task'];?>)">Отправить ответ</button>
-<p style="display: none" id="quest_id"><?=$quest['id']?></p>
-<p id="error_p"></p>
-<p id="success_p"></p>
 
 
 <?php

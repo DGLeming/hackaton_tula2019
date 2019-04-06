@@ -37,7 +37,7 @@ include 'markup/header.php';
 				<img src="'.$img_link.'" class="quest_img">
 				<p class="quest_name">'.$row['name'].'</p>
 				<p class="quest_description">'.$row['description'].'</p>
-				<p class="quest_author">Автор: '.$row['creator'].'</p>
+				<p class="quest_author">Автор: '.$row['creator'].'<br>Квест прошло '.$row['finished'].' человек из '.$row['started'].' начавших его</p>
 				<div class="quest_rating">
 					<p>Рейтинг:</p>
 					<p>'.$row['rating'].' баллов</p>

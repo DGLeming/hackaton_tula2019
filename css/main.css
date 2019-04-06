@@ -70,6 +70,22 @@ header-color: #663399;
 	border-radius: 15px;
 }
 
+.quest_item_copy {
+	border: 1px solid black;
+	margin: 10px;
+	background-color: #ccffff;
+	border-radius: 15px;
+}
+
+#quest_ending {
+	border: 1px solid black;
+	margin: 10px;
+	background-color: #ccffff;
+	border-radius: 15px;
+	width: 40%;
+	padding: 0 29%;
+}
+
 .quest_img {
 	width: 120px;
 	height: 120px;
@@ -95,8 +111,7 @@ header-color: #663399;
 }
 
 .quest_author {
-	width: 140px;
-    text-align: center;
+    margin-left: 20px;
     padding-bottom: 10px;
 }
 
@@ -133,4 +148,41 @@ header-color: #663399;
 	text-decoration: none;
 	color: #330066;
 	text-transform: uppercase;
+}
+
+.play_quest_about_block {
+	margin: 10px;
+	background-color: #ccffff;
+	border: 1px solid black;
+	width: 40%;
+	padding: 0 29%;
+}
+
+#error_p {
+	color:red;
+	text-align: center;
+	margin: 0 10px;
+}
+
+#success_p {
+	color: green;
+	text-align: center;
+	margin: 0 10px;
+}
+
+#ansver {
+	width: 100%;
+	height: 46px;
+}
+
+.quest_send_ansver {
+	width: 120px;
+	height: 30px;
+	border: none;
+	background-color: #6666ff;
+	margin: 0 auto;
+	display: block;
+    margin-bottom: 11px;
+    margin-top: 8px;
+    display: inline-block;
 }
