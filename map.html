@@ -231,13 +231,15 @@ var a;
         at: firstPos['lat']+','+firstPos['lng'],
         cat: 'restaurant'};
 
-    placesService.explore(parameters,
-      function (result) {
-        for (var i=0;i<intrPlaces.length;i++){
+        for (var i=intrPlaces.length-1;i>=0;i--){
+            console.log(i);
             intrPlaces[i].setVisibility(false);
             intrPlaces[i].dispose();
             intrPlaces.pop();
           }
+
+    placesService.explore(parameters,
+      function (result) {
         a=result;
         for (var b=0;b<a['results']['items'].length;b++){
           console.log(a['results']['items'][b]['title']);
@@ -245,13 +247,12 @@ var a;
           position = {
               lat: a['results']['items'][b]['position'][0],
               lng: a['results']['items'][b]['position'][1]
-          };
-          intrPlaces.push(); ////////////////////////
+          };////////////////////////
           marker = new H.map.Marker(position);
           console.log(position);
+          intrPlaces.push(marker);
           //marker.draggable = false;
           map.addObject(marker);
-          intrPlaces.push(marker);
         }
       }, function (error) {
         alert(error);
