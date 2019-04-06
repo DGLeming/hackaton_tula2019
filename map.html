@@ -127,8 +127,12 @@
     //console.log(marker);
     isFirstLoc=false;
     }
-    placesSearch(platform);
+    var kk ={type:['eat-drink',"sights-museums","hospital-health-care-facility","shopping"]};
+    for(var tt=0;tt<4;tt++){
+      placesSearch(platform,kk['type'][tt]);
+    }
     };
+
     
 
     // Get an instance of the geocoding service:
@@ -225,12 +229,12 @@ function addInfoBubble(map) {
 
 
 var a;
-  function placesSearch(platform) {
+  function placesSearch(platform,typeForF) {
     var placesService= platform.getPlacesService(),
       parameters = {
-        at: firstPos['lat']+','+firstPos['lng'],
-        cat: 'eat-drink',
-        size: '100'};
+        in: firstPos['lat']+','+firstPos['lng']+';'+'r=10000',
+        cat: typeForF,
+        size: '300'};
 
 
         for (var i=intrPlaces.length-1;i>=0;i--){
@@ -250,9 +254,14 @@ var a;
               lat: a['results']['items'][b]['position'][0],
               lng: a['results']['items'][b]['position'][1]
           };////////////////////////
-          var iconZ = new H.map.Icon("rest.svg",{size: {w:32,h:32}});
+          switch(typeForF){
+            case 'eat-drink':var iconZ = new H.map.Icon("rest.svg",{size: {w:32,h:32}}); break;
+            case 'sights-museums':var iconZ = new H.map.Icon("mus.svg",{size: {w:32,h:32}}); break;
+            case 'shopping':var iconZ = new H.map.Icon("shop.svg",{size: {w:32,h:32}}); break;
+            case 'hospital-health-care-facility':var iconZ = new H.map.Icon("med.svg",{size: {w:32,h:32}}); break;
+          }
           marker = new H.map.Marker(position,{icon: iconZ});
-          marker.setData({name:a['results']['items'][b]['title']});
+          marker.setData(a['results']['items'][b]);
           console.log(position);
 
           hoveredObject = marker;
@@ -278,7 +287,7 @@ var a;
         }
       }, function (error) {
         alert(error);
-      });
+      }); 
   }
 
   let hoveredObject;
@@ -299,7 +308,7 @@ var a;
       hoveredObject = e.target;
       if (hoveredObject.icon) {
           let row = hoveredObject.getData();
-          console.log(hoveredObject);
+          //console.log(hoveredObject);
           if (row) {
               //let name = row.attributes['NAME'];
               //let address = row.attributes['LOCATION_LABEL'];
@@ -310,8 +319,9 @@ var a;
                   e.currentPointer.viewportY);
               infoBubble.setPosition(pos);
               infoBubble.setContent(`
-                  <div class="info-bubble-title">Название:`+row['name']+` </div>`); 
-              infoBubble.open();
+                  <div class="info-bubble-title">Название:`+row['title']+` </div>
+                  `+row['vicinity']+``); 
+              infoBubble.open();    //a['results']['items'][b]
           }
       }
   });
