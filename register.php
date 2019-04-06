@@ -2,6 +2,8 @@
 session_start();
 if($_SESSION['user'] != ''){
 	header('Location: /');
+} else {
+	$isLogged = false;
 }
 switch ($_GET['error_code']) {
 	case 1:

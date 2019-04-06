@@ -2,7 +2,9 @@
 include 'scripts/db.php';
 session_start();
 if($_SESSION['user'] == '' || !$_SESSION['user']){
-	header('Location: /');
+	header('Location: /login');
+} else {
+	$isLogged = true;
 }
 
 $stmt_user = $pdo->query('SELECT * FROM users WHERE login = "'.$_SESSION['user'].'"');

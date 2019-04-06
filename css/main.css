@@ -1,0 +1,112 @@
+/*
+header-color: #663399;
+*/
+
+.header {
+	background-color: #ccccff;
+}
+
+.logo {
+	height: 50px;
+	padding: 0;
+	margin: 0;
+}
+
+.header_link {
+	text-decoration: none;
+	color: #330066;
+	font-size: 22px;
+	position: relative;
+	text-transform: uppercase;
+	float:right;
+	margin-right: 20px;
+    background-color: #c1c1f7;
+    border-radius: 10px;
+    top: 15px;
+    padding: 10px;
+}
+
+.quests_list {
+	width:69%;
+	margin:0;
+	padding: 0;
+	height:50px;
+	display: inline-block;
+}
+
+.right_menu {
+	width: 30%;
+	height:50px;
+	display: inline-block;
+	margin:0;
+	padding: 0;
+}
+
+.quests_sorting_type {
+	display: inline-block;
+    width: 28%;
+    margin: 0px 2.3%;
+    cursor: pointer;
+    text-align: center;
+    background-color: #ccffff;
+    padding: 10px 0;
+    border: 1px solid black;
+    border-radius: 15px;
+}
+
+.quests_sorting {
+	margin: 10px;
+}
+
+.quest_item {
+	border: 1px solid black;
+	margin: 10px;
+	background-color: #ccffff;
+	border-radius: 15px;
+}
+
+.quest_img {
+	width: 120px;
+	height: 120px;
+	border-radius: 60px;
+	margin: 10px;
+	display: inline-block;
+}
+
+.quest_name {
+	display: inline-block;
+	color: #330066;
+	position: absolute;
+	vertical-align: top;
+	font-size: 20px;
+}
+
+.quest_description {
+	display: inline-block;
+	vertical-align: top;
+	width:65%;
+	position: relative;
+	top: 30px;
+}
+
+.quest_author {
+	width: 140px;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.quest_rating {
+	float: right;
+    position: relative;
+    top: -150px;
+    left: -50px;
+}
+
+.quest_rating > p {
+	text-align: center;
+}
+
+.header > img {
+	margin-left: 20px;
+	padding: 10px;
+}

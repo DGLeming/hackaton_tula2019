@@ -29,3 +29,27 @@ function send_ansver(task_id,task_num){
     }
   });
 }
+
+function quests_sort (type) {
+    console.log(type);
+}
+
+$('#quests_sorting_type_1').click(function(){
+    quests_sort('hot');
+});
+
+$('#quests_sorting_type_2').click(function(){
+    quests_sort('best');
+});
+
+$('#quests_sorting_type_3').click(function(){
+    quests_sort('fresh');
+});
+
+$('.quest_item').click(function(){
+    window.location.href="/"+this.getAttribute('link')+"_1";
+});
+
+$('#logo').click(function(){
+    window.location.href = '/';
+})

@@ -3,7 +3,7 @@ session_start();
 if($_SESSION['user'] != ''){
 	$isLogged = true;
 } else {
-	$isLogged = false;
+	header('Location: /login');
 }
 
 
