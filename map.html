@@ -82,7 +82,10 @@
 
 
     /////////////////////////////////////////////////////////////////////////////
-    markerlist = [];
+    var markerlist = [];
+    var intrPlaces = [];
+    var searchTextF;
+    var firstPos;
     function showMap(){
       for (var i=0;i<markerlist.length;i++){
         markerlist[i].setVisibility(false);
@@ -91,7 +94,7 @@
       }
         document.getElementById('mapContainer').style.display = 'block';
     // Create the parameters for the geocoding request:
-    var searchTextF = document.getElementById('address').value;
+    searchTextF = document.getElementById('address').value;
     var geocodingParams = {
         searchText: searchTextF
     };
@@ -111,6 +114,7 @@
     };
     marker = new H.map.Marker(position);
     if(isFirstLoc) {  ///эта хрень зумит только для самой близкой точки
+    firstPos = position;
     map.setCenter(position);
     map.setZoom(12);
     
@@ -123,6 +127,7 @@
     //console.log(marker);
     isFirstLoc=false;
     }
+    placesSearch(platform);
     };
     
 
@@ -223,15 +228,30 @@ var a;
   function placesSearch(platform) {
     var placesService= platform.getPlacesService(),
       parameters = {
-        at: '54.19408,37.61875',
+        at: firstPos['lat']+','+firstPos['lng'],
         cat: 'restaurant'};
 
     placesService.explore(parameters,
       function (result) {
+        for (var i=0;i<intrPlaces.length;i++){
+            intrPlaces[i].setVisibility(false);
+            intrPlaces[i].dispose();
+            intrPlaces.pop();
+          }
         a=result;
         for (var b=0;b<a['results']['items'].length;b++){
           console.log(a['results']['items'][b]['title']);
           console.log(a['results']['items'][b]['position']);
+          position = {
+              lat: a['results']['items'][b]['position'][0],
+              lng: a['results']['items'][b]['position'][1]
+          };
+          intrPlaces.push(); ////////////////////////
+          marker = new H.map.Marker(position);
+          console.log(position);
+          //marker.draggable = false;
+          map.addObject(marker);
+          intrPlaces.push(marker);
         }
       }, function (error) {
         alert(error);
