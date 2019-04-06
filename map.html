@@ -250,7 +250,8 @@ var a;
               lat: a['results']['items'][b]['position'][0],
               lng: a['results']['items'][b]['position'][1]
           };////////////////////////
-          marker = new H.map.Marker(position);
+          var iconZ = new H.map.Icon("rest.svg",{size: {w:32,h:32}});
+          marker = new H.map.Marker(position,{icon: iconZ});
           console.log(position);
           intrPlaces.push(marker);
           //marker.draggable = false;
@@ -261,38 +262,7 @@ var a;
       });
   }
 
-  let hoveredObject;
-  let infoBubble = new H.ui.InfoBubble({lat: 0, lng: 0}, {});
-  infoBubble.addClass('info-bubble');
-  infoBubble.close();
-  ui.addBubble(infoBubble);
-  map.addEventListener('pointermove', (e) => {
-    if (hoveredObject && hoveredObject !== e.target) {
-        infoBubble.close();
-    }
-
-    hoveredObject = e.target;
-    if (hoveredObject.icon) {
-        let row = hoveredObject.getData();
-        if (row) {
-            let name = row.attributes['NAME'];
-            let address = row.attributes['LOCATION_LABEL'];
-            let volume = row.attributes['VOLUME'];
-
-            let pos = map.screenToGeo(
-                e.currentPointer.viewportX,
-                e.currentPointer.viewportY);
-            infoBubble.setPosition(pos);
-            infoBubble.setContent(`
-                <div class="info-bubble-title">lol</div>
-                <div class="info-bubble-label">
-                    ghbdtn <br />
-                    Volume: gf kg
-                </div>`);
-            infoBubble.open();
-        }
-    }
-});
+  
 
 
     // Instantiate (and display) a map object:
