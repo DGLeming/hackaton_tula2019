@@ -6,9 +6,12 @@ if($_SESSION['user'] == '' || !$_SESSION['user']){
 } else {
 	$isLogged = true;
 }
+$stmt = $pdo->query('SELECT * FROM quests WHERE id = '.$_GET['id']);
+$quest = $stmt->fetch();
 
 $stmt_user = $pdo->query('SELECT * FROM users WHERE login = "'.$_SESSION['user'].'"');
 $user = $stmt_user->fetchAll();
+
 $user_quests = json_decode($user[0]['quests_done']);
 $user_task = 0;
 for($i = 0; $i < count($user_quests); $i++){
@@ -22,6 +25,9 @@ if($user_task == 0){
 	$statement = $pdo->prepare("UPDATE users SET quests_done = ? WHERE login = ?");
 	$statement->execute(array($user_quests_encoded, $_SESSION['user']));
 	$user_task = 1;
+	var_dump($quest);
+	$statement = $pdo->prepare("UPDATE quests SET started = ? WHERE id = ?");
+	$statement->execute(array($quest['started']+1, $quest['id']));
 }
 if($user_task != $_GET['task']){
 	header('Location: /quest_'.$_GET['id'].'_'.$user_task);

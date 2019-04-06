@@ -6,6 +6,14 @@ if($_SESSION['user'] != ''){
 } else {
 	$isLogged = false;
 }
+$stmt = $pdo->query('SELECT id FROM quests');
+$quests_ids = array();
+while ($row = $stmt->fetch()){
+	array_push($quests_ids, $row['id']);
+}
+$quests_num = count($quests_ids);
+$random_quest_num = rand(0, $quests_num);
+$random_quest_id = $quests_ids[$random_quest_num];
 
 
 include 'markup/header.php';
@@ -49,7 +57,17 @@ include 'markup/header.php';
 	</div> -->
 </div>
 <div class="right_menu">
-	
+	<div class="right_menu_item">
+		<p>Основные возможности</p>
+		<ul type="square">
+			<li>
+				<a href="/create_quest" class="right_menu_link">Создать квест</a>
+			</li>
+			<li>
+				<a href="/quest_<?=$random_quest_id?>_1" class="right_menu_link">Случайный квест</a>
+			</li>
+		</ul>
+	</div>
 </div>
 
 <?php
