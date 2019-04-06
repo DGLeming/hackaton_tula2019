@@ -252,8 +252,26 @@ var a;
           };////////////////////////
           var iconZ = new H.map.Icon("rest.svg",{size: {w:32,h:32}});
           marker = new H.map.Marker(position,{icon: iconZ});
-          marker.setData('hello');
+          marker.setData({name:a['results']['items'][b]['title']});
           console.log(position);
+
+          hoveredObject = marker;
+          /*
+          if (hoveredObject.icon) {
+              let row = hoveredObject.getData();
+              //console.log(hoveredObject);
+              if (row) {
+                  infoBubble.setContent(`
+                      <div class="info-bubble-title">Название:`+a['results']['items'][b]['title']+` </div>
+                      <div class="info-bubble-label">
+                          dasf <br />
+                          Volume:fsdf  kg
+                      </div>`);
+                  
+              }
+          } */
+
+
           intrPlaces.push(marker);
           //marker.draggable = false;
           map.addObject(marker);
@@ -292,11 +310,7 @@ var a;
                   e.currentPointer.viewportY);
               infoBubble.setPosition(pos);
               infoBubble.setContent(`
-                  <div class="info-bubble-title">Название: </div>
-                  <div class="info-bubble-label">
-                      dasf <br />
-                      Volume:fsdf  kg
-                  </div>`);
+                  <div class="info-bubble-title">Название:`+row['name']+` </div>`); 
               infoBubble.open();
           }
       }
