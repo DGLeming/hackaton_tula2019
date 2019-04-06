@@ -48,7 +48,9 @@
     var platform = new H.service.Platform({
     'app_id': 'xqJ4WB5VxflEXQ0dZUvv',
     'app_code': 'ZEvYat0FFrSftO2vRmNB5A'
+
     });
+    
 
     // Obtain the default map types from the platform object
     var pixelRatio = window.devicePixelRatio || 1;
@@ -81,10 +83,12 @@
 
 
     /////////////////////////////////////////////////////////////////////////////
-    markerkist = [];
+    markerlist = [];
     function showMap(){
-      for (var i=0;i<markerkist.length;i++){
-        markerkist[i].setVisibility(false);
+      for (var i=0;i<markerlist.length;i++){
+        markerlist[i].setVisibility(false);
+        markerlist[i].dispose();
+        markerlist.pop();
       }
         document.getElementById('mapContainer').style.display = 'block';
     // Create the parameters for the geocoding request:
@@ -116,7 +120,7 @@
     marker.draggable = true;
 
     map.addObject(marker);
-    markerkist.push(marker);
+    markerlist.push(marker);
     //marker.setVisibility(false);
     //console.log(marker);
     isFirstLoc=false;
