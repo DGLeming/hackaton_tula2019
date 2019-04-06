@@ -10,6 +10,12 @@ if($_SESSION['user'] != ''){
 	}
 	$query = $pdo->prepare("INSERT INTO quests (name,description,reward,creator,tasks) VALUES (?,?,?,?,?)");
 	$query->execute(array($_POST['name'],$_POST['description'],1,$_SESSION['user'],json_encode($ids)));
+	$quest_id = $pdo->lastInsertId();
+	for($i = 0; $i < count($ids); $i++){
+		$statement = $pdo->prepare("UPDATE tasks SET original_quest = ? WHERE id = ?");
+		$statement->execute(array($quest_id, $ids[$i]));
+	}
+	header('Location: /');
 } else {
 	header('Location: /');
 }

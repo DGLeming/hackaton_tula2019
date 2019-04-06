@@ -7,8 +7,6 @@ while ($row = $stmt->fetch())
     if(($row['login'] == $_POST['login']) && (hash('sha256',$_POST['password']) == $row['password'])){
         $_SESSION['user'] = $_POST['login'];
         header('Location: /');
-    } else {
-        //echo hash('sha256',$_POST['password']);
     }
 }
 header('Location: /login?error_code=1');
