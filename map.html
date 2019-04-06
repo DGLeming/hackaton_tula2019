@@ -117,7 +117,6 @@
     }
     console.log(position);
     marker.draggable = true;
-
     map.addObject(marker);
     markerlist.push(marker);
     //marker.setVisibility(false);
@@ -143,7 +142,7 @@
 
     }
 
-
+//////////////////////////////////////////////////////////
   function addMarkerToGroup(group, coordinate, html) {
   var marker = new H.map.Marker(coordinate);
   // add custom data to the marker
@@ -163,6 +162,7 @@ function addInfoBubble(map) {
 
   // add 'tap' event listener, that opens info bubble, to the group
   group.addEventListener('tap', function (evt) {
+    console.log(222);
     // event target is the marker itself, group is a parent event target
     // for all objects that it contains
     var bubble =  new H.ui.InfoBubble(evt.target.getPosition(), {
@@ -215,6 +215,28 @@ function addInfoBubble(map) {
       target.setPosition(map.screenToGeo(pointer.viewportX, pointer.viewportY));
     }
   }, false);
+
+
+
+
+var a;
+  function placesSearch(platform) {
+    var placesService= platform.getPlacesService(),
+      parameters = {
+        at: '54.19408,37.61875',
+        cat: 'restaurant'};
+
+    placesService.explore(parameters,
+      function (result) {
+        a=result;
+        for (var b=0;b<a['results']['items'].length;b++){
+          console.log(a['results']['items'][b]['title']);
+          console.log(a['results']['items'][b]['position']);
+        }
+      }, function (error) {
+        alert(error);
+      });
+  }
 
 
     // Instantiate (and display) a map object:
