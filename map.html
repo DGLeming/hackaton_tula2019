@@ -246,8 +246,8 @@ var a;
       function (result) {
         a=result;
         for (var b=0;b<a['results']['items'].length;b++){
-          console.log(a['results']['items'][b]['title']);
-          console.log(a['results']['items'][b]['position']);
+          //console.log(a['results']['items'][b]['title']);
+          //console.log(a['results']['items'][b]['position']);
           position = {
               lat: a['results']['items'][b]['position'][0],
               lng: a['results']['items'][b]['position'][1]
@@ -260,7 +260,7 @@ var a;
           }
           marker = new H.map.Marker(position,{icon: iconZ});
           marker.setData(a['results']['items'][b]);
-          console.log(position);
+          //console.log(position);
 
           hoveredObject = marker;
           /*
@@ -341,23 +341,27 @@ function addClickEventListenerToMap(map) {
 }
 
 function findNearestMarker(coords) {
-  var minDist = 1000,
+  var minDist = 99,
     nearest_text = '*None*',
     markerDist,
     // get all objects added to the map
     objects = intrPlaces,
     len = intrPlaces.length,
     i;
-    function getDis(coord){
 
-    }
   // iterate over objects and calculate distance between them
   for (i = 0; i < len; i += 1) {
-    console.log(coords,objects[i]['P']['position'],objects[i].getPosition());
-
-    markerDist = objects[i].getPosition().distance(coords)/100000;
+    //console.log(coords,objects[i]['P']['position'],objects[i].getPosition());
+    
+    
+    var z1 = objects[i].getPosition()['lng'] * 1000000 - objects[i].getPosition()['lat'] * 1000000; 
+    var z2 = coords['lng'] * 1000000 - coords['lat'] * 1000000; 
+    var ans = Math.sqrt((z1*z1 + z2*z2)); 
+    //console.log(ans);
+    markerDist= ans;
+    //markerDist = objects[i].getPosition().distance(coords)/100000;
     //console.log(markerDist);
-    if (markerDist < minDist) {
+    if (markerDist > minDist) {
       minDist = markerDist;
       //console.log(objects[i]);
       nearest_text = objects[i]['P']['title'];
