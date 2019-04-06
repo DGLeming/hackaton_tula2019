@@ -49,9 +49,22 @@
     'app_id': 'xqJ4WB5VxflEXQ0dZUvv',
     'app_code': 'ZEvYat0FFrSftO2vRmNB5A'
     });
-
+    H.map.render.panorama.RenderEngine.getClosestPanoramas(
+    {lat:51.51, lng: -0.07}, function(panoramaData) {
+    if (panoramaData.length) {
+    
+      // Set map center to the location of the first available panorama:
+      map.setCenter(panoramaData[0].position);
+      
+      // Switch to to the panorama engine to show the panorama:
+      map.setEngineType(H.Map.EngineType.PANORAMA);
+    }
+  });
 // Configure panorama with platform credentials:
-platform.configure(H.map.render.panorama.RenderEngine)
+platform.configure(H.map.render.panorama.RenderEngine);
+var element,opt_options;
+H.map.ViewPort(element, opt_options);
+console.log(element,opt_options);
 
 // Instantiate a map, giving the constructor the engine type to use:
 map = new mapsjs.Map(mapElement, someBaseLayer, {
