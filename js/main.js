@@ -55,24 +55,13 @@ $('#logo').click(function(){
 })
 
 function quest_rating(quest_id, liked){
-    $.post( "scripts/rate_quest.php", { 'quest_id': quest_id, 'liked': liked})
+    if(liked){
+        like = 'like';
+    } else {
+        like = 'dislike';
+    }
+    $.post( "scripts/rate_quest.php", { 'quest_id': quest_id, 'like': like})
         .done(function( data ) {
         console.log(data);    
-        if(data == 'right'){
-            setTimeout(function(){
-                $('#success_p')[0].innerHTML = 'Поздравляем, ваш ответ принят, через 3 секунды вы будете перенаправлены к следующему заданию!'; 
-            }, 1000);
-            setTimeout(function(){
-                window.location.href = "/quest_"+quest_id+"_"+(task_num+1);
-            }, 4000);
-
-            
-        }
-        if(data == 'wrong'){
-            setTimeout(function(){
-                $('#error_p')[0].innerHTML = 'К сожалению - ответ не верный, попробуйте снова';
-            }, 1000);
-            
-        }
     });
 }
