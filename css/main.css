@@ -186,3 +186,69 @@ header-color: #663399;
     margin-top: 8px;
     display: inline-block;
 }
+
+.border_block {
+	padding: 10px;
+	background-color: #ccffff;
+	border: 1px solid black;
+	width: 400px;
+	margin: 0 auto;
+	border-radius: 15px;
+	margin-bottom: 15px;
+}
+
+#create_quest_block1 > input {
+	width: 315px;
+	margin-left: 4px;
+}
+
+#create_quest_block1 > textarea {
+	width: 314px;
+	height: 48px;
+}
+
+#create_quest_block1 > label:nth-of-type(2) {
+	vertical-align: top;
+}
+
+.create_quest_step > label:nth-of-type(1) {
+	vertical-align: top;
+} 
+
+.create_quest_step > textarea {
+	height: 48px;
+	margin-left: 31px;
+	width: 259px;
+}
+
+.create_quest_step > input:nth-of-type(1) {
+	margin-left: 29px;
+}
+
+.create_quest_step > input {
+	width: 259px;
+}
+
+.create_quest_buttons {
+	width: 150px;
+	border: 1px solid black;
+	margin: 10px 24px;
+	display: inline-block;
+	text-align: center;
+	background-color: #6666ff;
+	height: 30px;
+	text-transform: uppercase;
+
+}
+
+.create_quest_buttons_div {
+	width: 400px;
+	margin: 0 auto;
+	margin-bottom: 15px
+}
+
+.create_quest_step > p {
+	text-align: center;
+    text-transform: uppercase;
+    margin: 5px;
+}

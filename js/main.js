@@ -1,6 +1,7 @@
 function add_task(){
-	document.getElementById('send').outerHTML = '<label>Вопрос этапа</label><input type="text" name="task[descriptions][]"><br><label>Ответ на этап</label><input type="text" name="task[ansvers][]"><br><label>Подсказка на этап</label><input type="text" name="task[help][]"><br><button type="submit" id="send">Создать</button>';
-	//подсказка
+    step_new = parseInt(document.getElementById('work_stuff').innerHTML) + 1;
+	document.getElementById('work_stuff').outerHTML = '<div class="border_block create_quest_step"><p>Этап #'+step_new+'</p><label>Вопрос этапа: </label><textarea type="text" name="task[descriptions][]"></textarea><br><br><label>Ответ на этап: </label><input type="text" name="task[ansvers][]"><br><br><label>Подсказка на этап: </label><input type="text" name="task[help][]"></div><p id="work_stuff" style="display: none">'+step_new+'</p>';
+    window.scrollTo(0, document.body.scrollHeight);
 }
 
 function send_ansver(task_id,task_num){
@@ -12,20 +13,15 @@ function send_ansver(task_id,task_num){
         .done(function( data ) {
         	console.log(data);    
         if(data == 'right'){
-        	setTimeout(function(){
-        		$('#success_p')[0].innerHTML = 'Поздравляем, ваш ответ принят, через 3 секунды вы будете перенаправлены к следующему заданию!';	
-        	}, 1000);
+        	$('#success_p')[0].innerHTML = 'Поздравляем, ваш ответ принят, через 3 секунды вы будете перенаправлены к следующему заданию!';	
         	setTimeout(function(){
         		window.location.href = "/quest_"+quest_id+"_"+(task_num+1);
-        	}, 4000);
+        	}, 3000);
 
         	
         }
         if(data == 'wrong'){
-        	setTimeout(function(){
-        		$('#error_p')[0].innerHTML = 'К сожалению - ответ не верный, попробуйте снова';
-        	}, 1000);
-        	
+        	$('#error_p')[0].innerHTML = 'К сожалению - ответ не верный, попробуйте снова';
         }
     });
 }
@@ -65,3 +61,7 @@ function quest_rating(quest_id, liked){
         console.log(data);    
     });
 }
+
+$('#create_quest_add_step').submit(function(){
+return false;
+});
