@@ -19,9 +19,6 @@ switch ($_GET['error_code']) {
 		$error = '';
 		break;
 }
-var_dump($_GET);
-
-
 include 'markup/header.php';
 ?>
 	<section class="page-title">

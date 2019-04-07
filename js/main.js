@@ -541,3 +541,11 @@ function quest_rating(quest_id, liked){
         } 
     });
 }
+
+// $('#address').on('input', function() {
+// 	showMap();
+// });
+
+// $('#address').changed(function(){
+// 	showMap();
+// });
