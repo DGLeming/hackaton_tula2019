@@ -209,7 +209,7 @@ function addInfoBubble(map) {
     if (target instanceof mapsjs.map.Marker) {
       behavior.enable();
     }
-    addClickEventListenerToMap(map);    /////// узнается ближайшая точка
+    //addClickEventListenerToMap(map);    /////// узнается ближайшая точка
   }, false);
 
   // Listen to the drag event and move the position of the marker
@@ -331,7 +331,7 @@ var a;
 
 
   
-
+/*
 function addClickEventListenerToMap(map) {
   // add 'tap' listener
     var coords =  {lat: markerlist[0].Ua[0], lng: markerlist[0].Ua[1]};
@@ -340,7 +340,7 @@ function addClickEventListenerToMap(map) {
   
 }
 
-function findNearestMarker(coords) {
+/* function findNearestMarker(coords) {
   var minDist = 99,
     nearest_text = '*None*',
     markerDist,
@@ -370,7 +370,7 @@ function findNearestMarker(coords) {
   }
 
   alert('The nearest marker is: ' + nearest_text);
-}
+} */
   
   
 
