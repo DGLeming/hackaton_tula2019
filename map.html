@@ -2,7 +2,14 @@
   <head>
     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1549984893" />
+    
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-pano.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
+    <link rel="stylesheet" type="text/css" 
+      href="http://js.api.here.com/v3/3.0/mapsjs-ui.css" />
     <title>Лол</title>
     <style>
     #showMapB {
@@ -27,15 +34,9 @@
                       </form>
             <div style="width: 700px; height: 600px" id="mapContainer"></div>
         </div> 
-        <div class="col-md-4"></div>
     </div>
 
 
-    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
-    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
-    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
-    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
-    <script src="http://js.api.here.com/v3/3.0/mapsjs-pano.js" type="text/javascript" charset="utf-8"></script>
 
 
     
@@ -57,7 +58,8 @@
     var pixelRatio = window.devicePixelRatio || 1;
     var maptypes = platform.createDefaultLayers({
         tileSize: pixelRatio === 1 ? 256 : 512,
-        ppi: pixelRatio === 1 ? undefined : 320
+        ppi: pixelRatio === 1 ? undefined : 320,
+        lg: 'rus'
     });
     // Retrieve the target element for the map:
     var targetElement = document.getElementById('mapContainer');
@@ -75,7 +77,7 @@
 
     var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
 
-    var ui = H.ui.UI.createDefault(map, maptypes);
+    var ui = H.ui.UI.createDefault(map, maptypes, 'ru-RU');
 
     
 
@@ -148,6 +150,63 @@
     }
 
 
+
+
+    function showMapC(coords){
+      for (var i=0;i<markerlist.length;i++){
+        markerlist[i].setVisibility(false);
+        markerlist[i].dispose();
+        markerlist.pop();
+      }
+        
+
+
+    // Define a callback function to process the geocoding response:
+    
+    var
+        position,
+        marker;
+    // Add a marker for each location found
+    var isFirstLoc = true;
+    position = {
+        lat: coords['lat'],
+        lng: coords['lng']
+    };
+    marker = new H.map.Marker(position);
+    if(isFirstLoc) {  ///эта хрень зумит только для самой близкой точки
+    firstPos = position;
+    map.setCenter(position);
+    map.setZoom(16);
+    
+    }
+    console.log(position);
+    //marker.draggable = true;
+    map.addObject(marker);
+    markerlist.push(marker);
+    //marker.setVisibility(false);
+    //console.log(marker);
+    isFirstLoc=false;
+    
+    var kk ={type:['eat-drink',"sights-museums","hospital-health-care-facility","shopping"]};
+    for(var tt=0;tt<4;tt++){
+      placesSearch(platform,kk['type'][tt]);
+    }
+    
+    };
+
+    
+
+    // Get an instance of the geocoding service:
+    //var geocoder = platform.getGeocodingService();
+
+
+    // Call the geocode method with the geocoding parameters,
+    // the callback and an error callback function (called if a
+    // communication error occurs):
+  
+    
+
+
 //////////////////////////////////////////////////////////
   function addMarkerToGroup(group, coordinate, html) {
   var marker = new H.map.Marker(coordinate);
@@ -194,6 +253,7 @@ function addInfoBubble(map) {
 
     // disable the default draggability of the underlying map
   // when starting to drag a marker object:
+  
   map.addEventListener('dragstart', function(ev) {
     var target = ev.target;
     if (target instanceof H.map.Marker) {
@@ -220,12 +280,18 @@ function addInfoBubble(map) {
     if (target instanceof mapsjs.map.Marker) {
       //console.log(target);
       target.setPosition(map.screenToGeo(pointer.viewportX, pointer.viewportY));
+      var coords =  {lat: markerlist[0].b['lat'], lng: markerlist[0].b['lng']};
+      console.log(coords);
     }
   }, false);
 
 
 
+function setCoord(late,lnge){
+      var coords = {lat: late, lng: lnge};
 
+      map.setCenter(coords);
+}
 var a;
   function placesSearch(platform,typeForF) {
     var placesService= platform.getPlacesService(),
@@ -233,7 +299,7 @@ var a;
         in: firstPos['lat']+','+firstPos['lng']+';'+'r=10000',
         cat: typeForF,
         size: '300'};
-
+        console.log(firstPos);
 
         for (var i=intrPlaces.length-1;i>=0;i--){
             console.log(i);
@@ -297,7 +363,7 @@ var a;
 
 
   
-  
+    
     map.addEventListener('pointermove', (e) => {
       if (hoveredObject && hoveredObject !== e.target) {
           infoBubble.close();
@@ -322,7 +388,7 @@ var a;
               infoBubble.open();    //a['results']['items'][b]
           }
       }
-  });
+  }); 
 
 
 
