@@ -30,6 +30,7 @@ for($i = 0; $i < count($ratings); $i++){
 			$statement->execute(array($quest['rating']-2, $_POST['quest_id']));
 			$statement = $pdo->prepare("UPDATE users SET rated = ? WHERE login = ?");
 			$statement->execute(array(json_encode($ratings), $_SESSION['user']));
+			echo 'disliked';
 		}
 		if(!$liked_before && $liked){
 			$ratings[$i][1] = 1;
@@ -37,6 +38,7 @@ for($i = 0; $i < count($ratings); $i++){
 			$statement->execute(array($quest['rating']+2, $_POST['quest_id']));
 			$statement = $pdo->prepare("UPDATE users SET rated = ? WHERE login = ?");
 			$statement->execute(array(json_encode($ratings), $_SESSION['user']));
+			echo 'liked';
 		}
 	}
 }
@@ -44,9 +46,11 @@ if(!$found){
 	if($_POST['like'] == 'like'){
 		$liked = 1;
 		$liked2 = 1;
+		echo 'liked';
 	} else if($_POST['like'] == 'dislike'){
 		$liked = 0;
 		$liked2 = -1;
+		echo 'disliked';
 	}
 	array_push($ratings, array($_POST['quest_id'], $liked));
 	$statement = $pdo->prepare("UPDATE users SET rated = ? WHERE login = ?");

@@ -17,59 +17,186 @@ $random_quest_id = $quests_ids[$random_quest_num];
 
 
 include 'markup/header.php';
-?>
-<div class="quests_list">
-	<div class="quests_sorting">
-		<p class="quests_sorting_type" id='quests_sorting_type_1'>Горячие</p>
-		<p class="quests_sorting_type" id='quests_sorting_type_2'>Лучшие</p>
-		<p class="quests_sorting_type" id='quests_sorting_type_3'>Новые</p>
-	</div>
-	<?php
-	$stmt = $pdo->query('SELECT * FROM quests');
-	while ($row = $stmt->fetch())
-	{
-		if($row['img'] != ''){
-			$img_link = $row['img'];
-		} else {
-			$img_link = 'img/fun.jpg';
-		}
-	    echo '<div class="quest_item" link="quest_'.$row['id'].'">
-				<img src="'.$img_link.'" class="quest_img">
-				<p class="quest_name">'.$row['name'].'</p>
-				<p class="quest_description">'.$row['description'].'</p>
-				<p class="quest_author">Автор: '.$row['creator'].'<br>Квест прошло '.$row['finished'].' человек из '.$row['started'].' начавших его</p>
-				<div class="quest_rating">
-					<p>Рейтинг:</p>
-					<p>'.$row['rating'].' баллов</p>
-				</div>
-			</div>';
-	}
-	?>
-	<!-- <div class="quest_item" link="quest_1">
-		<img src="img/fun.jpg" class="quest_img">
-		<p class="quest_name">Название квеста1</p>
-		<p class="quest_description">Описание квеста может быть довольно обширным, так что надо написать длинный текст для проверки того, как будет вести себя верстка</p>
-		<p class="quest_author">Автор: DGLeming</p>
-		<div class="quest_rating">
-			<p>Рейтинг:</p>
-			<p>10 баллов</p>
+?>	
+	<!-- Page Title -->
+	<section class="page-title">
+		<div class="auto-container">
+			<h1>Квесты</h1>
+			<ul class="page-breadcrumb">
+				<li><a href="#">Квесты</a></li>
+				
+			</ul>
 		</div>
-	</div> -->
-</div>
-<div class="right_menu">
-	<div class="right_menu_item">
-		<p>Основные возможности</p>
-		<ul type="square">
-			<li>
-				<a href="/create_quest" class="right_menu_link">Создать квест</a>
-			</li>
-			<li>
-				<a href="/quest_<?=$random_quest_id?>_1" class="right_menu_link">Случайный квест</a>
-			</li>
-		</ul>
-	</div>
-</div>
-
+	</section>
+	<!-- End Page Title -->
+	
+	<!-- Shop Page Section -->
+	<section class="page-title-cat">
+		<div class="auto-container">
+			<h1>Лучшее:</h1>
+			
+		</div>
+	</section>
+	<section class="quest-page-section">
+		<div class="auto-container">
+			<div class="row clearfix">
+				<?php
+				$stmt = $pdo->query('SELECT * FROM quests');
+				while ($row = $stmt->fetch())
+				{
+					if($row['img'] != ''){
+						$img_link = $row['img'];
+					} else {
+						$img_link = 'images/fun.jpg';
+					}
+				    echo '<div class="shop-item col-lg-4 col-md-6 col-sm-12">
+							<div class="inner-box wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
+								<div class="image">
+									<img src="'.$img_link.'" alt= ""/>
+									<!-- Overlay Box -->
+									<div class="overlay-box">
+										<div class="overlay-inner">
+											<h4><a href="quest_'.$row['id'].'_1">'.$row['name'].'</a></h4>
+											<div class="price">'.$row['description'].'</div>
+											<div class="price">Рейтинг: '.$row['rating'].'</div>
+											<div class="price">Пользователей: '.$row['started'].'</div>
+											<ul class="product-list">
+												<li><a href="quest_'.$row['id'].'_1"><i class="fas fa-play"></i></a></li>
+												<!--<li><a href="#"><span class="icon flaticon-heart"></span></a></li>-->
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>';
+				}
+				?>
+				<!-- Shop Item -->
+				<!-- <div class="shop-item col-lg-4 col-md-6 col-sm-12">
+					<div class="inner-box wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
+						<div class="image">
+							<img src="images/resource/products/1.jpg" alt= ""/>
+							<div class="overlay-box">
+								<div class="overlay-inner">
+									<h4><a href="shop-single.html">Квест первый</a></h4>
+									<div class="price">Тут описание</div>
+									<ul class="product-list">
+										<li><a href="#"><i class="fas fa-play"></i></a></li>
+										<li><a href="#"><span class="icon flaticon-heart"></span></a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> -->
+				<!-- Скролл квестов
+				<div class="col-md-4"></div>
+				<div class="col-md-4">
+					<div class="text-center">
+						<ul class="styled-pagination">
+							<li class="prev"><a href="#"><span class="fa fa-angle-left"></span> &nbsp; Назад</a></li>
+							<li><a href="#" class="active">1</a></li>
+							<li><a href="#">2</a></li>
+							<li><a href="#">3</a></li>
+							<li class="next"><a href="#">Вперед &nbsp; <span class="fa fa-angle-right"></span></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-4"></div>-->
+			</div>
+		</div>
+	</section>
+	<!-- End Shop Page Section -->
+	<section class="page-title-cat">
+		<div class="auto-container">
+			<h1>Горячее:</h1>
+			
+		</div>
+	</section>
+	<section class="quest-page-section">
+		<div class="auto-container">
+			<div class="row clearfix">
+				
+				<!-- Shop Item -->
+				<?php
+				$stmt = $pdo->query('SELECT * FROM quests');
+				while ($row = $stmt->fetch())
+				{
+					if($row['img'] != ''){
+						$img_link = $row['img'];
+					} else {
+						$img_link = 'images/fun.jpg';
+					}
+				    echo '<div class="shop-item col-lg-4 col-md-6 col-sm-12">
+							<div class="inner-box wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
+								<div class="image">
+									<img src="'.$img_link.'" alt= ""/>
+									<!-- Overlay Box -->
+									<div class="overlay-box">
+										<div class="overlay-inner">
+											<h4><a href="quest_'.$row['id'].'_1">'.$row['name'].'</a></h4>
+											<div class="price">'.$row['description'].'</div>
+											<div class="price">Рейтинг: '.$row['rating'].'</div>
+											<div class="price">Пользователей: '.$row['started'].'</div>
+											<ul class="product-list">
+												<li><a href="quest_'.$row['id'].'_1"><i class="fas fa-play"></i></a></li>
+												<!--<li><a href="#"><span class="icon flaticon-heart"></span></a></li>-->
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>';
+				}
+				?>
+			</div>
+		</div>
+	</section>
+	<section class="page-title-cat">
+		<div class="auto-container">
+			<h1>Свежее:</h1>
+			
+		</div>
+	</section>
+	<section class="quest-page-section">
+		<div class="auto-container">
+			<div class="row clearfix">
+				
+				<!-- Shop Item -->
+				<?php
+				$stmt = $pdo->query('SELECT * FROM quests');
+				while ($row = $stmt->fetch())
+				{
+					if($row['img'] != ''){
+						$img_link = $row['img'];
+					} else {
+						$img_link = 'images/fun.jpg';
+					}
+				    echo '<div class="shop-item col-lg-4 col-md-6 col-sm-12">
+							<div class="inner-box wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
+								<div class="image">
+									<img src="'.$img_link.'" alt= ""/>
+									<!-- Overlay Box -->
+									<div class="overlay-box">
+										<div class="overlay-inner">
+											<h4><a href="quest_'.$row['id'].'_1">'.$row['name'].'</a></h4>
+											<div class="price">'.$row['description'].'</div>
+											<div class="price">Рейтинг: '.$row['rating'].'</div>
+											<div class="price">Пользователей: '.$row['started'].'</div>
+											<ul class="product-list">
+												<li><a href="quest_'.$row['id'].'_1"><i class="fas fa-play"></i></a></li>
+												<!--<li><a href="#"><span class="icon flaticon-heart"></span></a></li>-->
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>';
+				}
+				?>
+			</div>
+		</div>
+	</section>
 <?php
 include 'markup/footer.php';
 ?>
